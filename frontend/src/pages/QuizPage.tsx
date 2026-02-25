@@ -1,8 +1,10 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useAllQuestions, useQuestionsByTopic } from '../hooks/useQueries';
+import { useActor } from '../hooks/useActor';
 import QuestionCard from '../components/QuestionCard';
 import QuizSummary from '../components/QuizSummary';
+import ParticipantForm from '../components/ParticipantForm';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -22,6 +24,7 @@ export default function QuizPage() {
   const navigate = useNavigate();
   const search = useSearch({ from: '/quiz' }) as { topic?: string };
   const selectedTopic = search?.topic ?? null;
+  const { actor } = useActor();
 
   const allQuestionsQuery = useAllQuestions();
   const topicQuestionsQuery = useQuestionsByTopic(selectedTopic ?? '');
@@ -31,6 +34,11 @@ export default function QuizPage() {
     : (allQuestionsQuery.data ?? []);
 
   const isLoading = selectedTopic ? topicQuestionsQuery.isLoading : allQuestionsQuery.isLoading;
+
+  // Participant info state
+  const [participantName, setParticipantName] = useState('');
+  const [participantDate, setParticipantDate] = useState('');
+  const [participantReady, setParticipantReady] = useState(false);
 
   const [quizKey, setQuizKey] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -43,6 +51,12 @@ export default function QuizPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rawQuestions.length, quizKey]);
 
+  const handleParticipantSubmit = useCallback((name: string, date: string) => {
+    setParticipantName(name);
+    setParticipantDate(date);
+    setParticipantReady(true);
+  }, []);
+
   const handleAnswer = useCallback((answerIndex: number) => {
     setAnswers((prev) => {
       const updated = [...prev];
@@ -51,19 +65,47 @@ export default function QuizPage() {
     });
   }, [currentIndex]);
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback(async () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((i) => i + 1);
     } else {
+      // Calculate final score
+      const finalAnswers = [...answers];
+      finalAnswers[currentIndex] = answers[currentIndex];
+      const finalScore = finalAnswers.filter(
+        (ans, i) => ans !== null && ans !== undefined && questions[i] && Number(questions[i].correctAnswerIndex) === ans
+      ).length;
+      const finalTotal = questions.length;
+      const finalPercentage = finalTotal > 0 ? Math.round((finalScore / finalTotal) * 100) : 0;
+
+      // Submit result to backend (fire and forget)
+      if (actor) {
+        try {
+          await actor.submitResult(
+            participantName,
+            participantDate,
+            selectedTopic ?? 'Kuiz Penuh',
+            BigInt(finalScore),
+            BigInt(finalTotal),
+            finalPercentage
+          );
+        } catch (err) {
+          console.error('Failed to submit result:', err);
+        }
+      }
+
       setQuizFinished(true);
     }
-  }, [currentIndex, questions.length]);
+  }, [currentIndex, questions, answers, actor, participantName, participantDate, selectedTopic]);
 
   const handleRestart = useCallback(() => {
     setQuizKey((k) => k + 1);
     setCurrentIndex(0);
     setAnswers([]);
     setQuizFinished(false);
+    setParticipantReady(false);
+    setParticipantName('');
+    setParticipantDate('');
   }, []);
 
   const score = answers.filter(
@@ -77,7 +119,7 @@ export default function QuizPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
-      <header className="w-full border-b border-border bg-card shadow-xs sticky top-0 z-10">
+      <header className="w-full border-b border-border bg-card shadow-xs sticky top-0 z-10 no-print">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
           <Button
             variant="ghost"
@@ -107,13 +149,13 @@ export default function QuizPage() {
               <span className="text-xs text-muted-foreground">Kuiz Penuh</span>
             )}
           </div>
-          {!quizFinished && questions.length > 0 && (
+          {participantReady && !quizFinished && questions.length > 0 && (
             <span className="text-xs text-muted-foreground shrink-0 font-medium">
               {Math.min(currentIndex + 1, questions.length)}/{questions.length}
             </span>
           )}
         </div>
-        {!quizFinished && questions.length > 0 && (
+        {participantReady && !quizFinished && questions.length > 0 && (
           <div className="max-w-3xl mx-auto px-4 pb-2">
             <Progress value={progressPercent} className="h-1.5 rounded-full" />
           </div>
@@ -131,17 +173,24 @@ export default function QuizPage() {
             <Skeleton className="h-14 rounded-xl" />
             <Skeleton className="h-14 rounded-xl" />
           </div>
-        ) : questions.length === 0 ? (
+        ) : questions.length === 0 && participantReady ? (
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <p className="text-muted-foreground text-lg mb-4">Tiada soalan dijumpai untuk topik ini.</p>
             <Button onClick={() => navigate({ to: '/' })}>Kembali ke Laman Utama</Button>
           </div>
+        ) : !participantReady ? (
+          <ParticipantForm onSubmit={handleParticipantSubmit} topic={selectedTopic} />
         ) : quizFinished ? (
           <QuizSummary
             score={score}
             total={questions.length}
             onRestart={handleRestart}
             onHome={() => navigate({ to: '/' })}
+            participantName={participantName}
+            participantDate={participantDate}
+            topic={selectedTopic}
+            questions={questions}
+            userAnswers={answers}
           />
         ) : (
           <QuestionCard
@@ -158,7 +207,7 @@ export default function QuizPage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-border bg-card mt-auto">
+      <footer className="w-full border-t border-border bg-card mt-auto no-print">
         <div className="max-w-3xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
           <span>© {new Date().getFullYear()} Kuiz Refleksologi. Hak cipta terpelihara.</span>
           <span className="flex items-center gap-1">

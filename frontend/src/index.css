@@ -160,3 +160,79 @@
 .animate-fade-in {
   animation: fadeIn 0.25s ease-out both;
 }
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+@media print {
+  /* Hide everything by default */
+  body * {
+    display: none !important;
+  }
+
+  /* Show only the admin print card and all its descendants */
+  .admin-print-card,
+  .admin-print-card * {
+    display: block !important;
+  }
+
+  /* Inline elements inside the print card should remain inline */
+  .admin-print-card span,
+  .admin-print-card a {
+    display: inline !important;
+  }
+
+  /* Table elements need their proper display values */
+  .admin-print-card table {
+    display: table !important;
+  }
+
+  .admin-print-card thead {
+    display: table-header-group !important;
+  }
+
+  .admin-print-card tbody {
+    display: table-row-group !important;
+  }
+
+  .admin-print-card tr {
+    display: table-row !important;
+  }
+
+  .admin-print-card th,
+  .admin-print-card td {
+    display: table-cell !important;
+  }
+
+  /* Body and page settings */
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt !important;
+    font-family: Georgia, 'Times New Roman', serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  /* Remove shadows */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Disable animations */
+  .animate-scale-in,
+  .animate-fade-slide-in,
+  .animate-fade-in {
+    animation: none !important;
+  }
+
+  /* Page settings */
+  @page {
+    margin: 1.5cm 1.5cm 2cm 1.5cm;
+    size: A4 portrait;
+  }
+}

@@ -1,6 +1,7 @@
 import { RouterProvider, createRouter, createRootRoute, createRoute } from '@tanstack/react-router';
 import HomePage from './pages/HomePage';
 import QuizPage from './pages/QuizPage';
+import AdminPage from './pages/AdminPage';
 
 const rootRoute = createRootRoute();
 
@@ -16,7 +17,13 @@ const quizRoute = createRoute({
   component: QuizPage,
 });
 
-const routeTree = rootRoute.addChildren([homeRoute, quizRoute]);
+const adminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin',
+  component: AdminPage,
+});
+
+const routeTree = rootRoute.addChildren([homeRoute, quizRoute, adminRoute]);
 
 const router = createRouter({ routeTree });
 

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { Question } from '../backend';
+import type { Question, Result } from '../backend';
 
 export function useAllQuestions() {
   const { actor, isFetching } = useActor();
@@ -27,5 +27,19 @@ export function useQuestionsByTopic(topic: string) {
     },
     enabled: !!actor && !isFetching && !!topic,
     staleTime: 1000 * 60 * 10,
+  });
+}
+
+export function useResults() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<Result[]>({
+    queryKey: ['results'],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.getResults();
+    },
+    enabled: !!actor && !isFetching,
+    staleTime: 1000 * 30,
   });
 }

@@ -14,9 +14,20 @@ export interface Question {
     text: string;
     correctAnswerIndex: bigint;
 }
+export interface Result {
+    topic: string;
+    total: bigint;
+    date: string;
+    name: string;
+    score: bigint;
+    timestamp: bigint;
+    percentage: number;
+}
 export interface backendInterface {
     getAllQuestions(): Promise<Array<Question>>;
     getQuestion(index: bigint): Promise<Question>;
     getQuestionByText(text: string): Promise<Question>;
     getQuestionsByTopic(topic: string): Promise<Array<Question>>;
+    getResults(): Promise<Array<Result>>;
+    submitResult(name: string, date: string, topic: string, score: bigint, total: bigint, percentage: number): Promise<void>;
 }

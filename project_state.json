@@ -1,14 +1,15 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 9,
   "summary": "Interactive quiz website for the subject of Foot, Hand and Ear Reflexology. Questions are generated from user-provided notes. Features MCQ questions, topic categories, scoring system, answer feedback, and an attractive UI.",
   "architectural_notes": [
     "Questions are sourced from user-provided notes; content must be faithfully derived from those notes",
-    "Quiz supports topic categories: Kaki (Foot), Tangan (Hand), Telinga (Ear) Reflexology"
+    "Quiz supports topic categories: Kaki (Foot), Tangan (Hand), Telinga (Ear) Reflexology",
+    "Quiz results (participant name, date, score) must be stored persistently to support admin leaderboard and print functionality",
+    "Print panel (cetakan) is only accessible from the admin page, with per-participant print capability"
   ],
   "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Calm, minimalist hero illustration of two open hands with subtle circular dot patterns representing reflexology pressure points, warm green and cream tones (reflexology-hero.dim_1200x400.png)\n- Small circular icon of a hand with a glowing center point, flat illustration style, soft green on white background (reflexology-icon.dim_128x128.png)",
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-build-an-interactive-quiz-frontend-that-fetches-questions-from-the-backend-and-presents-them-one-at-a-time-each-question-displays-four-answer-choices-after-the-user-selects-an-answer-immediately-show-whether-it-was-correct-or-incorrect-along-with-the-explanation-allow-navigation-to-the-next-question-at-the-end-of-the-quiz-display-a-summary-screen-showing-total-score-e-g-9-12-percentage-and-a-performance-message-include-a-restart-quiz-button-to-retake-the-quiz",
@@ -33,6 +34,70 @@
         "REQ-4"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-a-participant-info-screen-before-the-quiz-begins-where-users-must-enter-their-name-and-the-date-store-this-information-in-local-state-and-pass-it-through-the-quiz-session-the-name-and-date-fields-should-be-clearly-labeled-in-english-with-a-start-quiz-button-that-is-disabled-until-both-fields-are-filled",
+      "title": "Add a participant info screen before the quiz begins where users must enter their name and the date. Store this information in local state and pass it through the quiz session. The name and date fields should be clearly labeled in English, with a 'Start Quiz' button that is disabled until both fields are filled.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-print-friendly-results-view-on-the-quiz-summary-screen-when-the-quiz-is-complete-display-the-participant-s-name-date-topic-chosen-total-score-percentage-and-a-breakdown-of-each-question-question-text-selected-answer-correct-answer-and-whether-it-was-correct-or-incorrect-include-a-clearly-labeled-print-results-link-button-that-triggers-the-browser-print-dialog-use-a-print-specific-css-media-query-to-hide-navigation-buttons-and-decorative-elements-so-only-the-results-content-is-printed",
+      "title": "Add a print-friendly results view on the quiz summary screen. When the quiz is complete, display the participant's name, date, topic chosen, total score, percentage, and a breakdown of each question (question text, selected answer, correct answer, and whether it was correct or incorrect). Include a clearly labeled 'Print Results' link/button that triggers the browser print dialog. Use a print-specific CSS media query to hide navigation, buttons, and decorative elements so only the results content is printed.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-after-the-quiz-is-completed-and-before-showing-the-summary-automatically-submit-the-participant-s-result-name-date-topic-score-total-percentage-to-the-backend-via-the-submitresult-function-using-the-existing-actor-hook-pattern-in-useactor-ts",
+      "title": "After the quiz is completed and before showing the summary, automatically submit the participant's result (name, date, topic, score, total, percentage) to the backend via the `submitResult` function using the existing actor hook pattern in `useActor.ts`.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-admin-panel-page-accessible-via-a-route-e-g-admin-this-page-fetches-all-quiz-results-from-the-backend-using-getresults-and-displays-them-in-a-ranked-leaderboard-table-the-table-must-show-rank-1st-2nd-3rd-participant-name-date-topic-score-e-g-9-12-and-percentage-results-must-be-sorted-from-highest-score-to-lowest-add-a-link-or-button-to-the-admin-panel-in-the-app-e-g-a-small-admin-link-in-the-footer-or-header-no-authentication-is-required-for-the-admin-panel",
+      "title": "Add an Admin Panel page accessible via a route (e.g., '/admin'). This page fetches all quiz results from the backend using `getResults` and displays them in a ranked leaderboard table. The table must show: rank (1st, 2nd, 3rd…), participant name, date, topic, score (e.g., 9/12), and percentage. Results must be sorted from highest score to lowest. Add a link or button to the admin panel in the app (e.g., a small 'Admin' link in the footer or header). No authentication is required for the admin panel.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-quiz-summary-screen-quizsummary-component-includes-a-clearly-visible-print-results-button-that-triggers-window-print-the-printable-view-must-display-participant-name-date-topic-chosen-total-score-e-g-9-12-percentage-and-a-per-question-breakdown-question-text-selected-answer-correct-answer-correct-incorrect-indicator-apply-a-print-specific-css-media-query-already-partially-present-in-frontend-src-index-css-that-hides-all-navigation-buttons-decorative-elements-and-non-result-content-so-only-the-results-are-printed",
+      "title": "Ensure the quiz summary screen (QuizSummary component) includes a clearly visible 'Print Results' button that triggers window.print(). The printable view must display: participant name, date, topic chosen, total score (e.g., 9/12), percentage, and a per-question breakdown (question text, selected answer, correct answer, correct/incorrect indicator). Apply a print-specific CSS media query (already partially present in frontend/src/index.css) that hides all navigation buttons, decorative elements, and non-result content so only the results are printed.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-print-results-button-and-all-print-related-ui-elements-from-the-quizsummary-component-frontend-src-components-quizsummary-tsx-the-quiz-summary-screen-should-no-longer-expose-any-print-functionality-to-quiz-participants",
+      "title": "Remove the 'Print Results' button and all print-related UI elements from the QuizSummary component (frontend/src/components/QuizSummary.tsx). The quiz summary screen should no longer expose any print functionality to quiz participants.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-per-participant-print-panel-to-the-admin-page-frontend-src-pages-adminpage-tsx-each-row-in-the-leaderboard-table-must-include-a-print-button-clicking-it-opens-a-print-friendly-view-showing-that-individual-participant-s-result-name-date-topic-chosen-score-e-g-9-12-percentage-and-a-per-question-breakdown-question-text-selected-answer-correct-answer-and-correct-incorrect-indicator-triggering-window-print-should-only-print-the-selected-participant-s-result-card-not-the-entire-leaderboard-table",
+      "title": "Add a per-participant print panel to the Admin page (frontend/src/pages/AdminPage.tsx). Each row in the leaderboard table must include a 'Print' button. Clicking it opens a print-friendly view showing that individual participant's result: name, date, topic chosen, score (e.g., 9/12), percentage, and a per-question breakdown (question text, selected answer, correct answer, and correct/incorrect indicator). Triggering window.print() should only print the selected participant's result card, not the entire leaderboard table.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-print-specific-css-media-query-in-frontend-src-index-css-to-hide-the-quiz-summary-print-section-if-any-remains-and-ensure-only-the-per-participant-admin-print-card-is-shown-when-printing-from-the-admin-page",
+      "title": "Update the print-specific CSS media query in frontend/src/index.css to hide the quiz summary print section (if any remains) and ensure only the per-participant admin print card is shown when printing from the Admin page.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -48,6 +113,32 @@
       "reqIds": [
         "REQ-1"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add name and date input fields before or during the quiz so participants can identify themselves",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add an admin panel that shows a leaderboard/list of all participants who answered the quiz, with their names, scores, and ranked from highest to lowest",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add a backend data model to store quiz attempt results. Each result record must include: participant name (Text), date (Text), topic (Text), score (Nat), total questions (Nat), percentage (Float), and a timestamp (Int). Expose the following backend functions: `submitResult(name: Text, date: Text, topic: Text, score: Nat, total: Nat, percentage: Float) : async ()` to save a result, and `getResults() : async [Result]` to retrieve all stored results sorted by score descending (highest first).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Move the print panel (cetakan) to the admin page only. The print functionality should allow printing results for each individual participant who completed the quiz, not a general summary.",
+      "reqIds": [],
       "status": "pending"
     }
   ],

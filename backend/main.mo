@@ -1,7 +1,15 @@
 import Text "mo:core/Text";
+import Nat "mo:core/Nat";
 import Order "mo:core/Order";
 import Array "mo:core/Array";
+import Float "mo:core/Float";
+import Time "mo:core/Time";
+import Iter "mo:core/Iter";
+import VarArray "mo:core/VarArray";
+import Map "mo:core/Map";
 import Runtime "mo:core/Runtime";
+
+
 
 actor {
   type Question = {
@@ -20,6 +28,27 @@ actor {
       };
     };
   };
+
+  type Result = {
+    name : Text;
+    timestamp : Int;
+    date : Text;
+    topic : Text;
+    score : Nat;
+    total : Nat;
+    percentage : Float;
+  };
+
+  module Result {
+    public func compareByScoreDesc(a : Result, b : Result) : Order.Order {
+      Nat.compare(b.score, a.score);
+    };
+  };
+
+  type Results = Map.Map<Nat, Result>;
+
+  var nextResultId = 0;
+  let results : Results = Map.empty<Nat, Result>();
 
   let questions : [Question] = [
     // 3.0 What is Pain?
@@ -184,5 +213,24 @@ actor {
   public query ({ caller }) func getQuestion(index : Nat) : async Question {
     if (index >= questions.size()) { Runtime.trap("Question not found") };
     questions[index];
+  };
+
+  public shared ({ caller }) func submitResult(name : Text, date : Text, topic : Text, score : Nat, total : Nat, percentage : Float) : async () {
+    let result : Result = {
+      name;
+      date;
+      topic;
+      score;
+      total;
+      percentage;
+      timestamp = Time.now();
+    };
+
+    results.add(nextResultId, result);
+    nextResultId += 1;
+  };
+
+  public query ({ caller }) func getResults() : async [Result] {
+    results.values().toArray().sort(Result.compareByScoreDesc);
   };
 };

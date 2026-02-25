@@ -2,13 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-build-an-interactive-quiz-frontend-that-fetches-questions-from-the-backend-and-presents-them-one-at-a-time-each-question-displays-four-answer-choices-after-the-user-selects-an-answer-immediately-show-whether-it-was-correct-or-incorrect-along-with-the-explanation-allow-navigation-to-the-next-question-at-the-end-of-the-quiz-display-a-summary-screen-showing-total-score-e-g-9-12-percentage-and-a-performance-message-include-a-restart-quiz-button-to-retake-the-quiz",
-      "featureTitle": "Build an interactive quiz frontend that fetches questions from the backend and presents them one at a time. Each question displays four answer choices. After the user selects an answer, immediately show whether it was correct or incorrect along with the explanation. Allow navigation to the next question. At the end of the quiz, display a summary screen showing total score (e.g., 9/12), percentage, and a performance message. Include a 'Restart Quiz' button to retake the quiz.",
+      "featureId": "feature-remove-the-print-results-button-and-all-print-related-ui-elements-from-the-quizsummary-component-frontend-src-components-quizsummary-tsx-the-quiz-summary-screen-should-no-longer-expose-any-print-functionality-to-quiz-participants",
+      "featureTitle": "Remove the 'Print Results' button and all print-related UI elements from the QuizSummary component (frontend/src/components/QuizSummary.tsx). The quiz summary screen should no longer expose any print functionality to quiz participants.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/QuestionCard.tsx",
-        "frontend/src/components/QuizSummary.tsx",
-        "frontend/src/pages/QuizPage.tsx"
+        "frontend/src/components/QuizSummary.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -18,16 +15,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-2"
+        "REQ-11"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-apply-a-clean-professional-and-calming-visual-theme-across-the-entire-application-use-warm-health-inspired-tones-e-g-soft-greens-creams-or-warm-neutrals-with-clear-sans-serif-typography-the-layout-should-feel-like-a-modern-e-learning-platform-with-a-prominent-quiz-card-centered-on-the-page-a-visible-topic-header-animated-transitions-between-questions-and-highlighted-answer-states-green-for-correct-red-for-incorrect",
-      "featureTitle": "Apply a clean, professional, and calming visual theme across the entire application. Use warm, health-inspired tones (e.g., soft greens, creams, or warm neutrals) with clear sans-serif typography. The layout should feel like a modern e-learning platform — with a prominent quiz card centered on the page, a visible topic header, animated transitions between questions, and highlighted answer states (green for correct, red for incorrect).",
+      "featureId": "feature-add-a-per-participant-print-panel-to-the-admin-page-frontend-src-pages-adminpage-tsx-each-row-in-the-leaderboard-table-must-include-a-print-button-clicking-it-opens-a-print-friendly-view-showing-that-individual-participant-s-result-name-date-topic-chosen-score-e-g-9-12-percentage-and-a-per-question-breakdown-question-text-selected-answer-correct-answer-and-correct-incorrect-indicator-triggering-window-print-should-only-print-the-selected-participant-s-result-card-not-the-entire-leaderboard-table",
+      "featureTitle": "Add a per-participant print panel to the Admin page (frontend/src/pages/AdminPage.tsx). Each row in the leaderboard table must include a 'Print' button. Clicking it opens a print-friendly view showing that individual participant's result: name, date, topic chosen, score (e.g., 9/12), percentage, and a per-question breakdown (question text, selected answer, correct answer, and correct/incorrect indicator). Triggering window.print() should only print the selected participant's result card, not the entire leaderboard table.",
       "files": [
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
+        "frontend/src/pages/AdminPage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -37,18 +33,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-12"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-topic-filter-or-category-selector-on-a-home-landing-screen-so-users-can-choose-to-quiz-on-a-specific-topic-e-g-what-is-pain-causes-of-disease-identifying-symptoms-or-take-a-full-mixed-quiz-covering-all-topics",
-      "featureTitle": "Add a topic filter or category selector on a home/landing screen so users can choose to quiz on a specific topic (e.g., 'What is Pain?', 'Causes of Disease', 'Identifying Symptoms') or take a full mixed quiz covering all topics.",
+      "featureId": "feature-update-the-print-specific-css-media-query-in-frontend-src-index-css-to-hide-the-quiz-summary-print-section-if-any-remains-and-ensure-only-the-per-participant-admin-print-card-is-shown-when-printing-from-the-admin-page",
+      "featureTitle": "Update the print-specific CSS media query in frontend/src/index.css to hide the quiz summary print section (if any remains) and ensure only the per-participant admin print card is shown when printing from the Admin page.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/TopicSelector.tsx",
-        "frontend/src/pages/HomePage.tsx",
-        "frontend/src/pages/QuizPage.tsx"
+        "frontend/src/index.css"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -58,7 +51,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-4"
+        "REQ-13"
       ],
       "confidence": "high"
     }

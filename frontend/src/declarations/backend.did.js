@@ -15,12 +15,27 @@ export const Question = IDL.Record({
   'text' : IDL.Text,
   'correctAnswerIndex' : IDL.Nat,
 });
+export const Result = IDL.Record({
+  'topic' : IDL.Text,
+  'total' : IDL.Nat,
+  'date' : IDL.Text,
+  'name' : IDL.Text,
+  'score' : IDL.Nat,
+  'timestamp' : IDL.Int,
+  'percentage' : IDL.Float64,
+});
 
 export const idlService = IDL.Service({
   'getAllQuestions' : IDL.Func([], [IDL.Vec(Question)], ['query']),
   'getQuestion' : IDL.Func([IDL.Nat], [Question], ['query']),
   'getQuestionByText' : IDL.Func([IDL.Text], [Question], ['query']),
   'getQuestionsByTopic' : IDL.Func([IDL.Text], [IDL.Vec(Question)], ['query']),
+  'getResults' : IDL.Func([], [IDL.Vec(Result)], ['query']),
+  'submitResult' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, IDL.Nat, IDL.Nat, IDL.Float64],
+      [],
+      [],
+    ),
 });
 
 export const idlInitArgs = [];
@@ -33,6 +48,15 @@ export const idlFactory = ({ IDL }) => {
     'text' : IDL.Text,
     'correctAnswerIndex' : IDL.Nat,
   });
+  const Result = IDL.Record({
+    'topic' : IDL.Text,
+    'total' : IDL.Nat,
+    'date' : IDL.Text,
+    'name' : IDL.Text,
+    'score' : IDL.Nat,
+    'timestamp' : IDL.Int,
+    'percentage' : IDL.Float64,
+  });
   
   return IDL.Service({
     'getAllQuestions' : IDL.Func([], [IDL.Vec(Question)], ['query']),
@@ -42,6 +66,12 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Text],
         [IDL.Vec(Question)],
         ['query'],
+      ),
+    'getResults' : IDL.Func([], [IDL.Vec(Result)], ['query']),
+    'submitResult' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Nat, IDL.Nat, IDL.Float64],
+        [],
+        [],
       ),
   });
 };

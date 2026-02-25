@@ -1,103 +1,55 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Interactive Reflexology Quiz Website with Notes-Based Questions",
+  "title": "Move print panel to Admin page with per-participant print functionality",
   "requirements": [
     {
-      "id": "REQ-2",
-      "summary": "Build an interactive quiz frontend that fetches questions from the backend and presents them one at a time with immediate feedback, navigation, and a summary screen at the end",
+      "id": "REQ-11",
+      "summary": "Remove print functionality from QuizSummary component",
       "acceptanceCriteria": [
-        "Questions are displayed one at a time with four selectable answer options",
-        "Correct/incorrect feedback with explanation is shown immediately after answering",
-        "Progress indicator shows current question number out of total (e.g., Question 3 of 12)",
-        "Final score screen shows score, percentage, and a message based on performance",
-        "Restart Quiz button resets and reshuffles the quiz"
+        "The QuizSummary component does not render a 'Print Results' button or any print-trigger element",
+        "The quiz summary screen still shows score, percentage, performance message, and per-question breakdown as before",
+        "No regression in quiz flow — Restart Quiz and navigation still work correctly"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/QuizPage.tsx",
-          "operation": "create",
-          "description": "Create the main quiz page component that fetches questions from the backend using getAllQuestions(), manages quiz state (current question index, selected answers, score), displays one question at a time with four answer options, shows immediate feedback with explanation after selection, displays progress indicator, and renders the summary screen at the end with score, percentage, performance message, and restart button"
-        },
-        {
-          "path": "frontend/src/components/QuestionCard.tsx",
-          "operation": "create",
-          "description": "Create a reusable question card component that displays the question text, renders four answer option buttons, handles answer selection, shows correct/incorrect state with visual feedback (green for correct, red for incorrect), displays the explanation after answering, and provides a 'Next Question' button"
-        },
-        {
           "path": "frontend/src/components/QuizSummary.tsx",
-          "operation": "create",
-          "description": "Create a quiz summary component that displays the final score (e.g., 9/12), percentage, a performance-based message (excellent/good/needs improvement), and a 'Restart Quiz' button that triggers quiz reset"
-        },
-        {
-          "path": "frontend/src/hooks/useQuizData.ts",
-          "operation": "create",
-          "description": "Create a custom hook that fetches all questions from the backend using the getAllQuestions method, handles loading and error states, and returns the questions array for the quiz flow"
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire the QuizPage component into the application routing so users can access the quiz interface"
+          "description": "Remove the 'Print Results' button and its onClick handler (handlePrint). Remove the hidden print-only sections (print-header and print-score classes). Retain all visible summary display elements including score, percentage, performance message, per-question breakdown, and the 'Restart Quiz' button. Ensure the component continues to display participant info and results correctly on screen."
         }
       ]
     },
     {
-      "id": "REQ-3",
-      "summary": "Apply a clean, professional, and calming visual theme using warm health-inspired tones with clear typography, centered quiz card layout, animated transitions, and highlighted answer states",
+      "id": "REQ-12",
+      "summary": "Add per-participant print panel to Admin page",
       "acceptanceCriteria": [
-        "Consistent color palette using warm, health-inspired tones applied throughout",
-        "Quiz card is centered and visually distinct from the background",
-        "Correct answers highlighted in green, incorrect in red after selection",
-        "Smooth animated transition between questions",
-        "Typography is clear and readable on all screen sizes"
+        "Each row in the Admin leaderboard table has a clearly labeled 'Print' button",
+        "Clicking 'Print' on a row opens or renders a print-ready view for that specific participant",
+        "The printed output contains: participant name, date, topic, score (e.g., 9/12), percentage, and a per-question breakdown",
+        "A print-specific CSS media query ensures only the selected participant's result card is printed and the leaderboard table, navigation, and decorative elements are hidden during print",
+        "The print view does not interfere with the normal on-screen rendering of the Admin page"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminPage.tsx",
+          "operation": "modify",
+          "description": "Add state to track the currently selected participant for printing (e.g., selectedParticipant). Add a 'Print' button to each row in the leaderboard table that sets the selected participant. Create a hidden print-ready card component (positioned absolutely or with hidden class) that displays the selected participant's name, date, topic, score (e.g., '9/12'), percentage, and a per-question breakdown. The breakdown must show question text, selected answer, correct answer, and a correct/incorrect indicator. Use the existing getAllQuestions query data to cross-reference question texts with the participant's topic. Implement a handlePrint function that sets the selected participant state and triggers window.print(). Assign a unique class or data-attribute (e.g., 'admin-print-card') to the print card for targeting in CSS. Ensure the print card is hidden on screen and only visible in print media. Preserve the existing leaderboard ranking, summary stats, and refresh functionality without modification."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Update print-specific CSS to target admin print card only",
+      "acceptanceCriteria": [
+        "The @media print CSS rules target the admin participant print card and ensure all other page elements (leaderboard, header, buttons, navigation) are hidden during print",
+        "Printing from any page other than the admin print action does not produce unintended output",
+        "The print layout is clean and readable with appropriate font sizes and no clipped content"
       ],
       "file_operations": [
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Define CSS custom properties for the warm, health-inspired color palette (soft greens, creams, warm neutrals) and apply global typography rules using clear sans-serif fonts with appropriate sizing for readability across all screen sizes"
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Extend the Tailwind configuration to include custom theme colors for the health-inspired palette (primary greens, cream backgrounds, neutral grays), add animation configurations for smooth question transitions, and define color utilities for correct (green) and incorrect (red) answer states"
-        },
-        {
-          "path": "frontend/src/components/QuizLayout.tsx",
-          "operation": "create",
-          "description": "Create a layout component that centers the quiz card on the page, applies the calming background using theme colors, ensures the quiz content is visually distinct and properly spaced, and provides a consistent frame for all quiz screens"
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Add a topic filter or category selector on a landing screen so users can choose a specific topic or take a full mixed quiz covering all topics",
-      "acceptanceCriteria": [
-        "Landing screen displays available topic categories and a 'Full Quiz' option",
-        "Selecting a topic filters questions to only those in that category",
-        "Selecting 'Full Quiz' includes all questions from all topics",
-        "Selected mode is clearly shown during the quiz session"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
-          "operation": "create",
-          "description": "Create a landing page that displays the reflexology quiz branding with the generated hero image (frontend/public/assets/generated/reflexology-hero.dim_1200x400.png), lists available topic categories (What is Pain?, Causes of Disease, Identifying Symptoms) derived from backend question topics, provides a 'Full Quiz' option covering all topics, and navigates to QuizPage with the selected filter when a topic or full quiz is chosen. Wire the generated icon image (frontend/public/assets/generated/reflexology-icon.dim_128x128.png) into the page header or branding area."
-        },
-        {
-          "path": "frontend/src/components/TopicSelector.tsx",
-          "operation": "create",
-          "description": "Create a topic selector component that displays clickable topic cards for each available category plus a 'Full Quiz' option, applies theme styling for visual consistency, and emits the selected topic filter when clicked"
-        },
-        {
-          "path": "frontend/src/pages/QuizPage.tsx",
-          "operation": "modify",
-          "description": "Modify QuizPage to accept a topic filter parameter from the route, filter questions using getQuestionsByTopic when a specific topic is selected or use getAllQuestions for full quiz mode, and display the selected mode clearly at the top of the quiz interface"
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire HomePage as the default landing route and configure routing so selecting a topic on HomePage navigates to QuizPage with the appropriate topic parameter"
+          "description": "Update the existing @media print block to hide all page elements by default (body * { display: none; }). Add an exception rule that shows only the admin print card (e.g., .admin-print-card and its descendants). Remove or override any existing print rules that target .print-header, .print-score, or quiz summary print sections. Ensure the admin print card uses block display, appropriate margins, readable font sizes (e.g., 12pt for body text, larger for headings), and no clipped or truncated content. Verify the printed layout includes all required fields: participant name, date, topic, score, percentage, and per-question breakdown with clear formatting."
         }
       ]
     }

@@ -96,11 +96,22 @@ export interface Question {
     text: string;
     correctAnswerIndex: bigint;
 }
+export interface Result {
+    topic: string;
+    total: bigint;
+    date: string;
+    name: string;
+    score: bigint;
+    timestamp: bigint;
+    percentage: number;
+}
 export interface backendInterface {
     getAllQuestions(): Promise<Array<Question>>;
     getQuestion(index: bigint): Promise<Question>;
     getQuestionByText(text: string): Promise<Question>;
     getQuestionsByTopic(topic: string): Promise<Array<Question>>;
+    getResults(): Promise<Array<Result>>;
+    submitResult(name: string, date: string, topic: string, score: bigint, total: bigint, percentage: number): Promise<void>;
 }
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
@@ -157,6 +168,34 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.getQuestionsByTopic(arg0);
+            return result;
+        }
+    }
+    async getResults(): Promise<Array<Result>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getResults();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getResults();
+            return result;
+        }
+    }
+    async submitResult(arg0: string, arg1: string, arg2: string, arg3: bigint, arg4: bigint, arg5: number): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.submitResult(arg0, arg1, arg2, arg3, arg4, arg5);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.submitResult(arg0, arg1, arg2, arg3, arg4, arg5);
             return result;
         }
     }

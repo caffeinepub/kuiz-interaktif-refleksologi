@@ -17,11 +17,25 @@ export interface Question {
   'text' : string,
   'correctAnswerIndex' : bigint,
 }
+export interface Result {
+  'topic' : string,
+  'total' : bigint,
+  'date' : string,
+  'name' : string,
+  'score' : bigint,
+  'timestamp' : bigint,
+  'percentage' : number,
+}
 export interface _SERVICE {
   'getAllQuestions' : ActorMethod<[], Array<Question>>,
   'getQuestion' : ActorMethod<[bigint], Question>,
   'getQuestionByText' : ActorMethod<[string], Question>,
   'getQuestionsByTopic' : ActorMethod<[string], Array<Question>>,
+  'getResults' : ActorMethod<[], Array<Result>>,
+  'submitResult' : ActorMethod<
+    [string, string, string, bigint, bigint, number],
+    undefined
+  >,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

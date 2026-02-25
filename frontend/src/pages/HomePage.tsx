@@ -2,7 +2,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useAllQuestions } from '../hooks/useQueries';
 import TopicSelector from '../components/TopicSelector';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Hand, Sparkles } from 'lucide-react';
+import { Hand, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -26,12 +26,20 @@ export default function HomePage() {
             alt="Reflexology Icon"
             className="w-10 h-10 rounded-full object-cover"
           />
-          <div>
+          <div className="flex-1">
             <h1 className="font-serif font-semibold text-lg text-foreground leading-tight">
               Kuiz Refleksologi
             </h1>
             <p className="text-xs text-muted-foreground">Tangan, Kaki & Telinga</p>
           </div>
+          <button
+            onClick={() => navigate({ to: '/admin' })}
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-primary/5 border border-transparent hover:border-primary/20"
+            aria-label="Admin Panel"
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Admin</span>
+          </button>
         </div>
       </header>
 
@@ -101,19 +109,29 @@ export default function HomePage() {
       <footer className="w-full border-t border-border bg-card mt-auto">
         <div className="max-w-5xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
           <span>© {new Date().getFullYear()} Kuiz Refleksologi. Hak cipta terpelihara.</span>
-          <span className="flex items-center gap-1">
-            Built with{' '}
-            <span className="text-error" aria-label="love">♥</span>{' '}
-            using{' '}
-            <a
-              href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== 'undefined' ? window.location.hostname : 'kuiz-refleksologi')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-primary transition-colors"
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate({ to: '/admin' })}
+              className="flex items-center gap-1 hover:text-primary transition-colors"
             >
-              caffeine.ai
-            </a>
-          </span>
+              <ShieldCheck className="w-3 h-3" />
+              Panel Admin
+            </button>
+            <span>·</span>
+            <span className="flex items-center gap-1">
+              Built with{' '}
+              <span className="text-error" aria-label="love">♥</span>{' '}
+              using{' '}
+              <a
+                href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== 'undefined' ? window.location.hostname : 'kuiz-refleksologi')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-primary transition-colors"
+              >
+                caffeine.ai
+              </a>
+            </span>
+          </div>
         </div>
       </footer>
     </div>
