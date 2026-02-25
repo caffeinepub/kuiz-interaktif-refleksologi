@@ -1,0 +1,105 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Interactive Reflexology Quiz Website with Notes-Based Questions",
+  "requirements": [
+    {
+      "id": "REQ-2",
+      "summary": "Build an interactive quiz frontend that fetches questions from the backend and presents them one at a time with immediate feedback, navigation, and a summary screen at the end",
+      "acceptanceCriteria": [
+        "Questions are displayed one at a time with four selectable answer options",
+        "Correct/incorrect feedback with explanation is shown immediately after answering",
+        "Progress indicator shows current question number out of total (e.g., Question 3 of 12)",
+        "Final score screen shows score, percentage, and a message based on performance",
+        "Restart Quiz button resets and reshuffles the quiz"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/QuizPage.tsx",
+          "operation": "create",
+          "description": "Create the main quiz page component that fetches questions from the backend using getAllQuestions(), manages quiz state (current question index, selected answers, score), displays one question at a time with four answer options, shows immediate feedback with explanation after selection, displays progress indicator, and renders the summary screen at the end with score, percentage, performance message, and restart button"
+        },
+        {
+          "path": "frontend/src/components/QuestionCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable question card component that displays the question text, renders four answer option buttons, handles answer selection, shows correct/incorrect state with visual feedback (green for correct, red for incorrect), displays the explanation after answering, and provides a 'Next Question' button"
+        },
+        {
+          "path": "frontend/src/components/QuizSummary.tsx",
+          "operation": "create",
+          "description": "Create a quiz summary component that displays the final score (e.g., 9/12), percentage, a performance-based message (excellent/good/needs improvement), and a 'Restart Quiz' button that triggers quiz reset"
+        },
+        {
+          "path": "frontend/src/hooks/useQuizData.ts",
+          "operation": "create",
+          "description": "Create a custom hook that fetches all questions from the backend using the getAllQuestions method, handles loading and error states, and returns the questions array for the quiz flow"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the QuizPage component into the application routing so users can access the quiz interface"
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Apply a clean, professional, and calming visual theme using warm health-inspired tones with clear typography, centered quiz card layout, animated transitions, and highlighted answer states",
+      "acceptanceCriteria": [
+        "Consistent color palette using warm, health-inspired tones applied throughout",
+        "Quiz card is centered and visually distinct from the background",
+        "Correct answers highlighted in green, incorrect in red after selection",
+        "Smooth animated transition between questions",
+        "Typography is clear and readable on all screen sizes"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define CSS custom properties for the warm, health-inspired color palette (soft greens, creams, warm neutrals) and apply global typography rules using clear sans-serif fonts with appropriate sizing for readability across all screen sizes"
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend the Tailwind configuration to include custom theme colors for the health-inspired palette (primary greens, cream backgrounds, neutral grays), add animation configurations for smooth question transitions, and define color utilities for correct (green) and incorrect (red) answer states"
+        },
+        {
+          "path": "frontend/src/components/QuizLayout.tsx",
+          "operation": "create",
+          "description": "Create a layout component that centers the quiz card on the page, applies the calming background using theme colors, ensures the quiz content is visually distinct and properly spaced, and provides a consistent frame for all quiz screens"
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add a topic filter or category selector on a landing screen so users can choose a specific topic or take a full mixed quiz covering all topics",
+      "acceptanceCriteria": [
+        "Landing screen displays available topic categories and a 'Full Quiz' option",
+        "Selecting a topic filters questions to only those in that category",
+        "Selecting 'Full Quiz' includes all questions from all topics",
+        "Selected mode is clearly shown during the quiz session"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "create",
+          "description": "Create a landing page that displays the reflexology quiz branding with the generated hero image (frontend/public/assets/generated/reflexology-hero.dim_1200x400.png), lists available topic categories (What is Pain?, Causes of Disease, Identifying Symptoms) derived from backend question topics, provides a 'Full Quiz' option covering all topics, and navigates to QuizPage with the selected filter when a topic or full quiz is chosen. Wire the generated icon image (frontend/public/assets/generated/reflexology-icon.dim_128x128.png) into the page header or branding area."
+        },
+        {
+          "path": "frontend/src/components/TopicSelector.tsx",
+          "operation": "create",
+          "description": "Create a topic selector component that displays clickable topic cards for each available category plus a 'Full Quiz' option, applies theme styling for visual consistency, and emits the selected topic filter when clicked"
+        },
+        {
+          "path": "frontend/src/pages/QuizPage.tsx",
+          "operation": "modify",
+          "description": "Modify QuizPage to accept a topic filter parameter from the route, filter questions using getQuestionsByTopic when a specific topic is selected or use getAllQuestions for full quiz mode, and display the selected mode clearly at the top of the quiz interface"
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire HomePage as the default landing route and configure routing so selecting a topic on HomePage navigates to QuizPage with the appropriate topic parameter"
+        }
+      ]
+    }
+  ]
+}

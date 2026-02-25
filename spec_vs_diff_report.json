@@ -1,0 +1,66 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T23:58:03.045Z",
+  "summary": "The diff implements a comprehensive reflexology quiz application with Motoko backend and React frontend. All four major requirements are addressed with strong implementation. Minor gaps exist around the backend's submit/score answers function visibility and inconsistent topic category naming in the seeded questions.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Backend exposes query functions to retrieve all questions AND submit/score answers",
+      "reason": "The diff shows getAllQuestions and getQuestionsByTopic in useQueries.ts, but no submitAnswer or scoreAnswer function is visible in the backend main.mo (truncated). The frontend does not call any scoring endpoint — scoring is done entirely client-side. The AC explicitly requires a backend submit/score function.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Questions are categorized under topics matching the note sections (e.g., 'What is Pain?', 'Causes of Disease', 'Identifying Symptoms')",
+      "reason": "The backend seeds questions with inconsistent and fragmented topic names such as 'Apakah Kesakitan?', '4.0 Sebab Tercetus Tubuh Tidak Sempurna / Penyakit', '4.0 Penyebab Gangguan Dalaman', '4.0 Gabungan Gangguan Tubuh & Minda', '4.1 Kenal Pasti Gejala Penyakit', and '4.1 Tanda-Tanda Penyakit' — many different strings rather than three consolidated canonical topic categories.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Internet Identity authentication provider with full AuthClient integration",
+      "reason": "The build request explicitly lists 'User authentication or login system' as a non-goal, yet a complete Internet Identity provider with login/logout functionality, AuthClient, DelegationIdentity, and identity-aware actor creation was implemented.",
+      "evidence": [
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/main.tsx"
+      ]
+    },
+    {
+      "description": "Dark mode color theme support",
+      "reason": "A full dark mode palette was implemented in the CSS with a complete .dark block overriding all color tokens. Dark mode was not requested in the build requirements.",
+      "evidence": [
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ]
+    }
+  ],
+  "confidence": 0.78,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/QuestionCard.tsx",
+    "frontend/src/components/QuizSummary.tsx",
+    "frontend/src/components/TopicSelector.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/utils.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/QuizPage.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

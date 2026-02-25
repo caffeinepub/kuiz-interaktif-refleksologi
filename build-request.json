@@ -1,0 +1,111 @@
+{
+  "kind": "build_request",
+  "title": "Interactive Reflexology Quiz Website with Notes-Based Questions",
+  "projectName": "Reflexology Quiz",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Build a Motoko backend that stores all quiz questions as structured data. Each question must include: question text (in Malay), four multiple-choice answer options, the correct answer index, a topic category, and an explanation. Seed the backend with questions derived from the provided notes on sections 3.0 (What is Pain?), 4.0 (Causes of Body Disorders/Disease), and 4.1 (Identifying Disease Symptoms). Questions to include: (1) What does 'pain' mean in reflexology? (2) Which of the following is an example of an external disturbance? (3) Which of the following is an example of an internal disturbance? (4) How do both external and internal disturbances affect the body? (5) How does a reflexologist identify a problem organ using reflexology zones? (6) What does it indicate if pressing a reflexology point causes severe pain and noticeable swelling? (7) What does it indicate if pressing a reflexology point causes no pain and no swelling? (8) What should a practitioner do before performing hand reflexology on a client? (9) How often should reflexology treatment be repeated for best results? (10) Which condition is considered EASY to treat with hand reflexology techniques? (11) Which condition is considered DIFFICULT to treat with hand reflexology? (12) What does it mean if a reflexology pressure point is only mildly painful when pressed?",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Bina soalan berdasarkan nota ini dahulu.",
+          "Sakit bermaksud rasa yang tidak menyenangkan, pedih, berdenyut, bengkak, salah urat, luka dan sebagainya.",
+          "Gangguan dari luar",
+          "Gangguan dari dalam",
+          "Penyakit yang senang disembuhkan dengan teknik refleksologi tangan",
+          "Penyakit yang sukar disembuhkan dengan teknik refleksologi tangan adalah penyakit yang kronik"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores at least 12 MCQ questions seeded from the provided notes",
+        "Each question has a text, four options, correct answer index, topic category, and explanation",
+        "Backend exposes query functions to retrieve all questions and submit/score answers",
+        "Questions are categorized under topics matching the note sections (e.g., 'What is Pain?', 'Causes of Disease', 'Identifying Symptoms')"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Build an interactive quiz frontend that fetches questions from the backend and presents them one at a time. Each question displays four answer choices. After the user selects an answer, immediately show whether it was correct or incorrect along with the explanation. Allow navigation to the next question. At the end of the quiz, display a summary screen showing total score (e.g., 9/12), percentage, and a performance message. Include a 'Restart Quiz' button to retake the quiz.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1",
+          "msg-3"
+        ],
+        "quotes": [
+          "Kuiz interaktif dengan soalan pelbagai pilihan (MCQ)",
+          "Sistem markah dan keputusan di akhir kuiz",
+          "Maklum balas jawapan betul/salah selepas setiap soalan"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Questions are displayed one at a time with four selectable answer options",
+        "Correct/incorrect feedback with explanation is shown immediately after answering",
+        "Progress indicator shows current question number out of total (e.g., Question 3 of 12)",
+        "Final score screen shows score, percentage, and a message based on performance",
+        "Restart Quiz button resets and reshuffles the quiz"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Apply a clean, professional, and calming visual theme across the entire application. Use warm, health-inspired tones (e.g., soft greens, creams, or warm neutrals) with clear sans-serif typography. The layout should feel like a modern e-learning platform — with a prominent quiz card centered on the page, a visible topic header, animated transitions between questions, and highlighted answer states (green for correct, red for incorrect).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Antara muka menarik yang mudah digunakan"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Consistent color palette using warm, health-inspired tones applied throughout",
+        "Quiz card is centered and visually distinct from the background",
+        "Correct answers highlighted in green, incorrect in red after selection",
+        "Smooth animated transition between questions",
+        "Typography is clear and readable on all screen sizes"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a topic filter or category selector on a home/landing screen so users can choose to quiz on a specific topic (e.g., 'What is Pain?', 'Causes of Disease', 'Identifying Symptoms') or take a full mixed quiz covering all topics.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Kategori soalan mengikut topik"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Landing screen displays available topic categories and a 'Full Quiz' option",
+        "Selecting a topic filters questions to only those in that category",
+        "Selecting 'Full Quiz' includes all questions from all topics",
+        "Selected mode is clearly shown during the quiz session"
+      ]
+    }
+  ],
+  "constraints": [
+    "All quiz question data must be stored and served from the Motoko backend, not hardcoded in the frontend",
+    "All user-facing text in the UI must be in English; quiz question content (derived from notes) may remain in Malay"
+  ],
+  "nonGoals": [
+    "User authentication or login system",
+    "Saving quiz history or scores per user",
+    "Audio or video content",
+    "Questions about topics not yet provided in notes (e.g., foot or ear reflexology — to be added in future sessions)"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Calm, minimalist hero illustration of two open hands with subtle circular dot patterns representing reflexology pressure points, warm green and cream tones (reflexology-hero.dim_1200x400.png)",
+      "Small circular icon of a hand with a glowing center point, flat illustration style, soft green on white background (reflexology-icon.dim_128x128.png)"
+    ],
+    "edits": []
+  }
+}

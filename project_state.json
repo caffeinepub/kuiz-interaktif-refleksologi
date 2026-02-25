@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Interactive quiz website for the subject of Foot, Hand and Ear Reflexology. Questions are generated from user-provided notes. Features MCQ questions, topic categories, scoring system, answer feedback, and an attractive UI.",
+  "architectural_notes": [
+    "Questions are sourced from user-provided notes; content must be faithfully derived from those notes",
+    "Quiz supports topic categories: Kaki (Foot), Tangan (Hand), Telinga (Ear) Reflexology"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Calm, minimalist hero illustration of two open hands with subtle circular dot patterns representing reflexology pressure points, warm green and cream tones (reflexology-hero.dim_1200x400.png)\n- Small circular icon of a hand with a glowing center point, flat illustration style, soft green on white background (reflexology-icon.dim_128x128.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-an-interactive-quiz-frontend-that-fetches-questions-from-the-backend-and-presents-them-one-at-a-time-each-question-displays-four-answer-choices-after-the-user-selects-an-answer-immediately-show-whether-it-was-correct-or-incorrect-along-with-the-explanation-allow-navigation-to-the-next-question-at-the-end-of-the-quiz-display-a-summary-screen-showing-total-score-e-g-9-12-percentage-and-a-performance-message-include-a-restart-quiz-button-to-retake-the-quiz",
+      "title": "Build an interactive quiz frontend that fetches questions from the backend and presents them one at a time. Each question displays four answer choices. After the user selects an answer, immediately show whether it was correct or incorrect along with the explanation. Allow navigation to the next question. At the end of the quiz, display a summary screen showing total score (e.g., 9/12), percentage, and a performance message. Include a 'Restart Quiz' button to retake the quiz.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-clean-professional-and-calming-visual-theme-across-the-entire-application-use-warm-health-inspired-tones-e-g-soft-greens-creams-or-warm-neutrals-with-clear-sans-serif-typography-the-layout-should-feel-like-a-modern-e-learning-platform-with-a-prominent-quiz-card-centered-on-the-page-a-visible-topic-header-animated-transitions-between-questions-and-highlighted-answer-states-green-for-correct-red-for-incorrect",
+      "title": "Apply a clean, professional, and calming visual theme across the entire application. Use warm, health-inspired tones (e.g., soft greens, creams, or warm neutrals) with clear sans-serif typography. The layout should feel like a modern e-learning platform — with a prominent quiz card centered on the page, a visible topic header, animated transitions between questions, and highlighted answer states (green for correct, red for incorrect).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-topic-filter-or-category-selector-on-a-home-landing-screen-so-users-can-choose-to-quiz-on-a-specific-topic-e-g-what-is-pain-causes-of-disease-identifying-symptoms-or-take-a-full-mixed-quiz-covering-all-topics",
+      "title": "Add a topic filter or category selector on a home/landing screen so users can choose to quiz on a specific topic (e.g., 'What is Pain?', 'Causes of Disease', 'Identifying Symptoms') or take a full mixed quiz covering all topics.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Interactive quiz website for Reflexology (Kaki, Tangan, Telinga) with MCQ questions generated from user notes, topic categories, scoring, and answer feedback",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Build a Motoko backend that stores all quiz questions as structured data. Each question must include: question text (in Malay), four multiple-choice answer options, the correct answer index, a topic category, and an explanation. Seed the backend with questions derived from the provided notes on sections 3.0 (What is Pain?), 4.0 (Causes of Body Disorders/Disease), and 4.1 (Identifying Disease Symptoms). Questions to include: (1) What does 'pain' mean in reflexology? (2) Which of the following is an example of an external disturbance? (3) Which of the following is an example of an internal disturbance? (4) How do both external and internal disturbances affect the body? (5) How does a reflexologist identify a problem organ using reflexology zones? (6) What does it indicate if pressing a reflexology point causes severe pain and noticeable swelling? (7) What does it indicate if pressing a reflexology point causes no pain and no swelling? (8) What should a practitioner do before performing hand reflexology on a client? (9) How often should reflexology treatment be repeated for best results? (10) Which condition is considered EASY to treat with hand reflexology techniques? (11) Which condition is considered DIFFICULT to treat with hand reflexology? (12) What does it mean if a reflexology pressure point is only mildly painful when pressed?",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Kuiz Interaktif Refleksologi",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

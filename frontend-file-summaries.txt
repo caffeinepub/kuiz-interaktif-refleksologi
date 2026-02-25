@@ -1,0 +1,12 @@
+{
+  "frontend/src/index.css": "Global styles with a warm health-inspired OKLCH color palette (soft greens, creams, warm neutrals), custom fonts (Plus Jakarta Sans + Lora), and animation keyframes for quiz transitions.",
+  "frontend/tailwind.config.js": "Extended Tailwind config with custom fonts, success/error color tokens, card shadows, and animation utilities for the quiz UI.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching all questions and questions by topic from the backend canister.",
+  "frontend/src/App.tsx": "Root app component with TanStack Router setup, defining home ('/') and quiz ('/quiz') routes.",
+  "frontend/src/pages/HomePage.tsx": "Landing page with hero image, topic selector grid, and full quiz option; fetches all questions to derive available topics.",
+  "frontend/src/components/TopicSelector.tsx": "Grid of clickable topic cards plus a Full Quiz card, showing question counts and navigating to the quiz with the selected filter.",
+  "frontend/src/pages/QuizPage.tsx": "Main quiz page that reads topic from route search params, shuffles questions, manages answer state, shows progress bar, and renders QuestionCard or QuizSummary.",
+  "frontend/src/components/QuestionCard.tsx": "Single question display with four answer option buttons, correct/incorrect visual feedback, explanation toggle, and next/finish navigation.",
+  "frontend/src/components/QuizSummary.tsx": "End-of-quiz summary showing score, percentage, star rating, performance message, and restart/home action buttons.",
+  "frontend/src/lib/utils.ts": "Utility function `cn` combining clsx and tailwind-merge for conditional class name composition."
+}
