@@ -53,7 +53,6 @@ function getPerformanceLabel(percentage: number): string {
   return 'Perlu Lebih Usaha';
 }
 
-// Hidden print card rendered off-screen, shown only during print
 interface PrintCardProps {
   participant: Result;
 }
@@ -135,7 +134,6 @@ export default function AdminPage() {
 
   const handlePrint = (participant: Result) => {
     setSelectedParticipant(participant);
-    // Allow state to update before printing
     setTimeout(() => {
       window.print();
     }, 50);
@@ -330,9 +328,7 @@ export default function AdminPage() {
       {/* Hidden Print Card — only visible during print */}
       <div ref={printCardRef} aria-hidden="true">
         {selectedParticipant && (
-          <PrintCard
-            participant={selectedParticipant}
-          />
+          <PrintCard participant={selectedParticipant} />
         )}
       </div>
 

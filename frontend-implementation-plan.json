@@ -1,55 +1,93 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Move print panel to Admin page with per-participant print functionality",
+  "title": "Redeploy and rebuild the existing application",
   "requirements": [
     {
-      "id": "REQ-11",
-      "summary": "Remove print functionality from QuizSummary component",
+      "id": "REQ-16",
+      "summary": "Rebuild and redeploy the full application in its current state without any feature changes, ensuring all existing functionality is restored and operational",
       "acceptanceCriteria": [
-        "The QuizSummary component does not render a 'Print Results' button or any print-trigger element",
-        "The quiz summary screen still shows score, percentage, performance message, and per-question breakdown as before",
-        "No regression in quiz flow — Restart Quiz and navigation still work correctly"
+        "The backend Motoko actor deploys successfully with all existing questions and result storage functions intact.",
+        "The frontend builds and loads without errors.",
+        "All existing routes (/, /quiz, /admin) are accessible.",
+        "The quiz flow (topic selection, participant form, questions, summary) works end to end.",
+        "The admin leaderboard page loads and displays results correctly."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/QuizSummary.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Remove the 'Print Results' button and its onClick handler (handlePrint). Remove the hidden print-only sections (print-header and print-score classes). Retain all visible summary display elements including score, percentage, performance message, per-question breakdown, and the 'Restart Quiz' button. Ensure the component continues to display participant info and results correctly on screen."
-        }
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "summary": "Add per-participant print panel to Admin page",
-      "acceptanceCriteria": [
-        "Each row in the Admin leaderboard table has a clearly labeled 'Print' button",
-        "Clicking 'Print' on a row opens or renders a print-ready view for that specific participant",
-        "The printed output contains: participant name, date, topic, score (e.g., 9/12), percentage, and a per-question breakdown",
-        "A print-specific CSS media query ensures only the selected participant's result card is printed and the leaderboard table, navigation, and decorative elements are hidden during print",
-        "The print view does not interfere with the normal on-screen rendering of the Admin page"
-      ],
-      "file_operations": [
+          "description": "Verify that the router configuration includes all three existing routes (/, /quiz, /admin) and confirm that route definitions are correct for deployment"
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Confirm the hero banner and TopicSelector integration are functioning correctly, ensuring navigation to /quiz works on topic selection"
+        },
+        {
+          "path": "frontend/src/pages/QuizPage.tsx",
+          "operation": "modify",
+          "description": "Verify the complete quiz flow including ParticipantForm rendering, question shuffling and display, answer tracking, score calculation, result submission to backend, and QuizSummary rendering on completion"
+        },
         {
           "path": "frontend/src/pages/AdminPage.tsx",
           "operation": "modify",
-          "description": "Add state to track the currently selected participant for printing (e.g., selectedParticipant). Add a 'Print' button to each row in the leaderboard table that sets the selected participant. Create a hidden print-ready card component (positioned absolutely or with hidden class) that displays the selected participant's name, date, topic, score (e.g., '9/12'), percentage, and a per-question breakdown. The breakdown must show question text, selected answer, correct answer, and a correct/incorrect indicator. Use the existing getAllQuestions query data to cross-reference question texts with the participant's topic. Implement a handlePrint function that sets the selected participant state and triggers window.print(). Assign a unique class or data-attribute (e.g., 'admin-print-card') to the print card for targeting in CSS. Ensure the print card is hidden on screen and only visible in print media. Preserve the existing leaderboard ranking, summary stats, and refresh functionality without modification."
-        }
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "summary": "Update print-specific CSS to target admin print card only",
-      "acceptanceCriteria": [
-        "The @media print CSS rules target the admin participant print card and ensure all other page elements (leaderboard, header, buttons, navigation) are hidden during print",
-        "Printing from any page other than the admin print action does not produce unintended output",
-        "The print layout is clean and readable with appropriate font sizes and no clipped content"
-      ],
-      "file_operations": [
+          "description": "Confirm the admin leaderboard table correctly fetches and displays results from the backend with proper ranking, badges, and print functionality"
+        },
+        {
+          "path": "frontend/src/components/TopicSelector.tsx",
+          "operation": "modify",
+          "description": "Ensure topic cards render correctly with icons, question counts, and proper onSelect callback handling"
+        },
+        {
+          "path": "frontend/src/components/ParticipantForm.tsx",
+          "operation": "modify",
+          "description": "Verify form validation and submission logic work correctly before starting the quiz"
+        },
+        {
+          "path": "frontend/src/components/QuestionCard.tsx",
+          "operation": "modify",
+          "description": "Confirm question display, answer selection, feedback rendering, explanation toggle, and navigation controls function properly"
+        },
+        {
+          "path": "frontend/src/components/QuizSummary.tsx",
+          "operation": "modify",
+          "description": "Verify results summary displays participant info, score, performance rating, answer breakdown, and action buttons correctly"
+        },
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Confirm the backend actor creation and caching logic works correctly for both authenticated and anonymous contexts"
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Verify all three React Query hooks (useAllQuestions, useQuestionsByTopic, useResults) correctly fetch data from the backend actor with proper caching"
+        },
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Confirm AuthClient lifecycle, login/logout functionality, and identity state management work correctly"
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Verify the application entry point correctly initializes QueryClientProvider and InternetIdentityProvider wrappers"
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Confirm the HTML entry point correctly mounts the React app and loads the main module"
+        },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Update the existing @media print block to hide all page elements by default (body * { display: none; }). Add an exception rule that shows only the admin print card (e.g., .admin-print-card and its descendants). Remove or override any existing print rules that target .print-header, .print-score, or quiz summary print sections. Ensure the admin print card uses block display, appropriate margins, readable font sizes (e.g., 12pt for body text, larger for headings), and no clipped or truncated content. Verify the printed layout includes all required fields: participant name, date, topic, score, percentage, and per-question breakdown with clear formatting."
+          "description": "Verify global styles, Tailwind configuration, OKLCH color tokens, and utility classes are correctly applied"
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Confirm Tailwind configuration including dark mode, custom fonts, color tokens, and animations is correct for deployment"
         }
       ]
     }

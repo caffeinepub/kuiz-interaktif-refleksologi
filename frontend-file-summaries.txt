@@ -1,14 +1,14 @@
 {
-  "frontend/src/index.css": "Global styles with OKLCH color tokens for light/dark modes and animation utilities. The @media print block now hides all page elements by default and only reveals the `.admin-print-card` element and its descendants, ensuring clean per-participant printing from the Admin page only.",
-  "frontend/tailwind.config.js": "Extended Tailwind config with custom fonts, success/error color tokens, card shadows, and animation utilities for the quiz UI.",
-  "frontend/src/hooks/useQueries.ts": "React Query hooks file extended with a new `useResults` hook that fetches all quiz results from the backend via actor.getResults(), sorted by score descending.",
-  "frontend/src/App.tsx": "Root app component with TanStack Router updated to include a new /admin route rendering AdminPage alongside the existing home and quiz routes.",
-  "frontend/src/pages/HomePage.tsx": "Landing page updated to include a subtle \"Admin\" navigation link in the header and footer that routes to /admin.",
-  "frontend/src/components/TopicSelector.tsx": "Grid of clickable topic cards plus a Full Quiz card, showing question counts and navigating to the quiz with the selected filter.",
-  "frontend/src/pages/QuizPage.tsx": "Main quiz page updated to show ParticipantForm before questions, store participant name/date in state, submit results to the backend via actor.submitResult on quiz completion, and pass all required props to QuizSummary.",
-  "frontend/src/components/QuestionCard.tsx": "Single question display with four answer option buttons, correct/incorrect visual feedback, explanation toggle, and next/finish navigation.",
-  "frontend/src/components/QuizSummary.tsx": "Quiz results summary component showing participant info, score display, performance label, per-question breakdown table, and action buttons (Cuba Lagi / Laman Utama). The print button and all print-only sections have been removed.",
+  "frontend/src/index.css": "Global styles with OKLCH color tokens for light/dark modes, answer feedback utilities, fade/slide animations, and print styles for admin card.",
+  "frontend/tailwind.config.js": "Extended Tailwind config with custom fonts (Plus Jakarta Sans, Lora), OKLCH color tokens, card shadows, and animation utilities.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching all questions, questions by topic, and quiz results from the backend actor.",
+  "frontend/src/App.tsx": "Root app component with TanStack Router configured for three routes: home (/), quiz (/quiz), and admin (/admin).",
+  "frontend/src/pages/HomePage.tsx": "Landing page with hero banner, topic selector grid, admin navigation link in header and footer, and caffeine.ai attribution.",
+  "frontend/src/components/TopicSelector.tsx": "Grid of clickable topic cards plus a Full Quiz card showing question counts with gradient styling and hover effects.",
+  "frontend/src/pages/QuizPage.tsx": "Full quiz flow page handling participant form, shuffled questions, answer tracking, score calculation, backend result submission, and summary display.",
+  "frontend/src/components/QuestionCard.tsx": "Single question display with four answer options, correct/incorrect visual feedback, explanation toggle, and next/finish navigation.",
+  "frontend/src/components/QuizSummary.tsx": "Quiz results summary showing participant info, star rating, score circle, performance label, score breakdown, per-question table, and action buttons.",
   "frontend/src/lib/utils.ts": "Utility function `cn` combining clsx and tailwind-merge for conditional class name composition.",
-  "frontend/src/components/ParticipantForm.tsx": "New component that renders a pre-quiz form with Name (text) and Date (date) inputs, both required, with a disabled \"Mulakan Kuiz\" button until both fields are filled.",
-  "frontend/src/pages/AdminPage.tsx": "Admin panel page at /admin that displays a ranked leaderboard of all participant results with a \"Cetak\" (Print) button per row. Clicking Print sets the selected participant in state and triggers window.print(), rendering a hidden `.admin-print-card` div that is only visible during printing."
+  "frontend/src/components/ParticipantForm.tsx": "Pre-quiz form collecting participant name and date with validation before enabling the start button.",
+  "frontend/src/pages/AdminPage.tsx": "Admin leaderboard page showing ranked participant results with stats summary, sortable table, and per-participant print functionality."
 }

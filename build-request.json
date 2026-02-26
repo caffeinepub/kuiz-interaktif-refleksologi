@@ -1,76 +1,37 @@
 {
   "kind": "build_request",
-  "title": "Move print panel to Admin page with per-participant print functionality",
-  "projectName": "Reflexology Quiz",
-  "priority": "normal",
+  "title": "Redeploy and rebuild the existing application",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-11",
-      "text": "Remove the 'Print Results' button and all print-related UI elements from the QuizSummary component (frontend/src/components/QuizSummary.tsx). The quiz summary screen should no longer expose any print functionality to quiz participants.",
-      "target": "frontend",
+      "id": "REQ-16",
+      "text": "Rebuild and redeploy the full application (backend and frontend) in its current state without any feature changes, ensuring all existing functionality is restored and operational.",
+      "target": "both",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-1"
         ],
         "quotes": [
-          "Panel cetak wujudkan di muka surat admin sahaja"
+          "tolong percepatkan"
         ]
       },
       "acceptanceCriteria": [
-        "The QuizSummary component does not render a 'Print Results' button or any print-trigger element",
-        "The quiz summary screen still shows score, percentage, performance message, and per-question breakdown as before",
-        "No regression in quiz flow — Restart Quiz and navigation still work correctly"
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "text": "Add a per-participant print panel to the Admin page (frontend/src/pages/AdminPage.tsx). Each row in the leaderboard table must include a 'Print' button. Clicking it opens a print-friendly view showing that individual participant's result: name, date, topic chosen, score (e.g., 9/12), percentage, and a per-question breakdown (question text, selected answer, correct answer, and correct/incorrect indicator). Triggering window.print() should only print the selected participant's result card, not the entire leaderboard table.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "Panel cetak wujudkan di muka surat admin sahaja",
-          "cetakan adalah bagi setiap individu yang menjawab soalan kuiz"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Each row in the Admin leaderboard table has a clearly labeled 'Print' button",
-        "Clicking 'Print' on a row opens or renders a print-ready view for that specific participant",
-        "The printed output contains: participant name, date, topic, score (e.g., 9/12), percentage, and a per-question breakdown",
-        "A print-specific CSS media query ensures only the selected participant's result card is printed and the leaderboard table, navigation, and decorative elements are hidden during print",
-        "The print view does not interfere with the normal on-screen rendering of the Admin page"
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "text": "Update the print-specific CSS media query in frontend/src/index.css to hide the quiz summary print section (if any remains) and ensure only the per-participant admin print card is shown when printing from the Admin page.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "Panel cetak wujudkan di muka surat admin sahaja"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The @media print CSS rules target the admin participant print card and ensure all other page elements (leaderboard, header, buttons, navigation) are hidden during print",
-        "Printing from any page other than the admin print action does not produce unintended output",
-        "The print layout is clean and readable with appropriate font sizes and no clipped content"
+        "The backend Motoko actor deploys successfully with all existing questions and result storage functions intact.",
+        "The frontend builds and loads without errors.",
+        "All existing routes (/, /quiz, /admin) are accessible.",
+        "The quiz flow (topic selection, participant form, questions, summary) works end to end.",
+        "The admin leaderboard page loads and displays results correctly."
       ]
     }
   ],
   "constraints": [
-    "Do not modify files under frontend/src/hooks/ or frontend/src/components/ui/",
-    "Do not change the backend data model or Motoko actor",
-    "The existing leaderboard ranking and refresh functionality in AdminPage.tsx must remain intact"
+    "Do not change any existing features, logic, or data.",
+    "Do not modify immutable frontend paths."
   ],
   "nonGoals": [
-    "Adding authentication or access control to the Admin page",
-    "Storing per-question answer breakdowns in the backend — use only data already available in the results fetched via getResults()",
-    "Adding any new print functionality to the QuizSummary or QuizPage components"
+    "Adding new questions or features.",
+    "Changing the visual design or layout.",
+    "Modifying the backend data model."
   ],
   "imageRequirements": {
     "required": [],

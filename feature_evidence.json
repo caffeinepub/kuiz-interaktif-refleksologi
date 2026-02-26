@@ -2,27 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-remove-the-print-results-button-and-all-print-related-ui-elements-from-the-quizsummary-component-frontend-src-components-quizsummary-tsx-the-quiz-summary-screen-should-no-longer-expose-any-print-functionality-to-quiz-participants",
-      "featureTitle": "Remove the 'Print Results' button and all print-related UI elements from the QuizSummary component (frontend/src/components/QuizSummary.tsx). The quiz summary screen should no longer expose any print functionality to quiz participants.",
+      "featureId": "feature-rebuild-and-redeploy-the-full-application-backend-and-frontend-in-its-current-state-without-any-feature-changes-ensuring-all-existing-functionality-is-restored-and-operational",
+      "featureTitle": "Rebuild and redeploy the full application (backend and frontend) in its current state without any feature changes, ensuring all existing functionality is restored and operational.",
       "files": [
-        "frontend/src/components/QuizSummary.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-per-participant-print-panel-to-the-admin-page-frontend-src-pages-adminpage-tsx-each-row-in-the-leaderboard-table-must-include-a-print-button-clicking-it-opens-a-print-friendly-view-showing-that-individual-participant-s-result-name-date-topic-chosen-score-e-g-9-12-percentage-and-a-per-question-breakdown-question-text-selected-answer-correct-answer-and-correct-incorrect-indicator-triggering-window-print-should-only-print-the-selected-participant-s-result-card-not-the-entire-leaderboard-table",
-      "featureTitle": "Add a per-participant print panel to the Admin page (frontend/src/pages/AdminPage.tsx). Each row in the leaderboard table must include a 'Print' button. Clicking it opens a print-friendly view showing that individual participant's result: name, date, topic chosen, score (e.g., 9/12), percentage, and a per-question breakdown (question text, selected answer, correct answer, and correct/incorrect indicator). Triggering window.print() should only print the selected participant's result card, not the entire leaderboard table.",
-      "files": [
+        "frontend/src/components/TopicSelector.tsx",
         "frontend/src/pages/AdminPage.tsx"
       ],
       "components": [
@@ -33,25 +16,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-12"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-the-print-specific-css-media-query-in-frontend-src-index-css-to-hide-the-quiz-summary-print-section-if-any-remains-and-ensure-only-the-per-participant-admin-print-card-is-shown-when-printing-from-the-admin-page",
-      "featureTitle": "Update the print-specific CSS media query in frontend/src/index.css to hide the quiz summary print section (if any remains) and ensure only the per-participant admin print card is shown when printing from the Admin page.",
-      "files": [
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-13"
+        "REQ-16"
       ],
       "confidence": "high"
     }

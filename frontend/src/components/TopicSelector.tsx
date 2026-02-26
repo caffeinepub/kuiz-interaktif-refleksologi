@@ -8,10 +8,6 @@ interface TopicSelectorProps {
   onSelect: (topic: string | null) => void;
 }
 
-const TOPIC_ICONS: Record<string, string> = {
-  default: '🖐️',
-};
-
 const TOPIC_COLORS = [
   'from-primary/10 to-accent/30 border-primary/20 hover:border-primary/50',
   'from-accent/20 to-primary/10 border-accent/30 hover:border-accent/60',
@@ -51,7 +47,7 @@ export default function TopicSelector({ topics, questionCounts, totalCount, onSe
         >
           <div className="flex items-center justify-between w-full">
             <div className="w-10 h-10 rounded-xl bg-background/60 flex items-center justify-center text-lg">
-              {TOPIC_ICONS[topic] ?? '📋'}
+              📋
             </div>
             <Badge variant="secondary" className="text-xs">
               {questionCounts[topic] ?? 0} soalan

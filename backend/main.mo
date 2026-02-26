@@ -9,7 +9,8 @@ import VarArray "mo:core/VarArray";
 import Map "mo:core/Map";
 import Runtime "mo:core/Runtime";
 
-
+// Assumption: All questions added at the same time will be grouped under the same dated section
+// with format // --- Questions: yyyy-mm-dd ---
 
 actor {
   type Question = {
@@ -50,6 +51,7 @@ actor {
   var nextResultId = 0;
   let results : Results = Map.empty<Nat, Result>();
 
+  // --- Questions: 2026-02-25 ---
   let questions : [Question] = [
     // 3.0 What is Pain?
     {
