@@ -554,15 +554,15 @@ actor {
   let results : Results = Map.empty<Nat, Result>();
 
   public query ({ caller }) func getAllQuestions() : async [Question] {
-    questionBank.sort();
+    questionBank;
   };
 
   public query ({ caller }) func getQuestionsByTopic(topic : Text) : async [Question] {
-    questionBank.filter(func(q) { q.topic == topic });
+    questionBank.filter(func(q : Question) : Bool { q.topic == topic });
   };
 
   public query ({ caller }) func getQuestionByText(text : Text) : async Question {
-    switch (questionBank.find(func(q) { q.text == text })) {
+    switch (questionBank.find(func(q : Question) : Bool { q.text == text })) {
       case (null) { Runtime.trap("Question not found") };
       case (?question) { question };
     };

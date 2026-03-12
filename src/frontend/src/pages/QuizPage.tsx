@@ -20,6 +20,26 @@ function shuffleArray<T>(arr: T[]): T[] {
   return a;
 }
 
+// Shuffle the answer options for a question and update correctAnswerIndex accordingly
+function shuffleAnswers(question: Question): Question {
+  const originalAnswers = [...question.answers];
+  const correctIdx = Number(question.correctAnswerIndex);
+  const correctAnswer = originalAnswers[correctIdx];
+
+  // Create index array and shuffle it
+  const indices = originalAnswers.map((_, i) => i);
+  const shuffledIndices = shuffleArray(indices);
+
+  const shuffledAnswers = shuffledIndices.map((i) => originalAnswers[i]);
+  const newCorrectIdx = shuffledAnswers.indexOf(correctAnswer);
+
+  return {
+    ...question,
+    answers: shuffledAnswers,
+    correctAnswerIndex: BigInt(newCorrectIdx),
+  };
+}
+
 export default function QuizPage() {
   const navigate = useNavigate();
   const search = useSearch({ from: "/quiz" }) as { topic?: string };
@@ -50,7 +70,8 @@ export default function QuizPage() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional partial deps
   const questions = useMemo(() => {
     if (rawQuestions.length === 0) return [];
-    return shuffleArray(rawQuestions);
+    // Shuffle question order AND shuffle answers within each question
+    return shuffleArray(rawQuestions).map(shuffleAnswers);
   }, [rawQuestions.length, quizKey]);
 
   const handleParticipantSubmit = useCallback((name: string, date: string) => {
